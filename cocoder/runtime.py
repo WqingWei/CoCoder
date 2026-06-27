@@ -337,7 +337,7 @@ class Pico:
                 "<final>Done.</final>",
             ]
         )
-        # prefix 可以理解成 agent 的“工作手册”：
+        # prefix 可以理解成 agent 的"工作手册"：
         # 它是谁、工具怎么调用、当前仓库是什么状态，都写在这里。
         text = textwrap.dedent(
             f"""\
@@ -528,7 +528,7 @@ class Pico:
         refresh = self.refresh_prefix()
         self.resume_state = self.evaluate_resume_state()
         prompt, metadata = self.context_manager.build(user_message)
-        # 这里把“这轮 prompt 是怎么拼出来的”连同缓存相关状态一起记下来，
+        # 这里把"这轮 prompt 是怎么拼出来的"连同缓存相关状态一起记下来，
         # 后面 trace/report 才能解释清楚：为什么这一轮 prefix 变了、缓存有没有命中。
         metadata.update(
             {
@@ -560,7 +560,7 @@ class Pico:
         payload = self.redact_artifact(payload or {})
         payload["event"] = event
         payload["created_at"] = now()
-        # trace 是运行中的逐事件时间线，适合回答“这一轮 agent 到底做了什么”。
+        # trace 是运行中的逐事件时间线，适合回答"这一轮 agent 到底做了什么"。
         self.run_store.append_trace(task_state, payload)
         return payload
 
@@ -644,7 +644,7 @@ class Pico:
 
         为什么存在：
         并不是每个工具结果都值得长期带进下一轮 prompt。完整结果已经进了
-        `history`，这里只挑少量“下一轮大概率还会用到”的事实做提纯，
+        `history`，这里只挑少量"下一轮大概率还会用到"的事实做提纯，
         例如最近读写过哪些文件、某个文件读出来的短摘要。
 
         输入 / 输出：
@@ -757,7 +757,7 @@ class Pico:
         """执行一次完整的 agent 回合，直到产出最终答案或命中停止条件。
 
         为什么存在：
-        `ask()` 是整个 runtime 的总调度器。它把“用户提一个请求”扩展成一条
+        `ask()` 是整个 runtime 的总调度器。它把"用户提一个请求"扩展成一条
         可持续推进的控制循环：记录会话、组 prompt、调用模型、执行工具、
         写 trace/report、更新状态，直到模型给出最终答案或系统主动停下。
 
@@ -770,7 +770,7 @@ class Pico:
         它是 CLI 和底层工具/模型之间的核心桥梁。CLI 收到用户输入后基本只做
         一件事：调用 `agent.ask()`。而 `ask()` 内部再去驱动 `ContextManager`
         组 prompt、`model_client.complete()` 调模型、`run_tool()` 执行动作。
-        如果新人想理解 cocoder 是怎么”从一句话跑成一个 agent 流程”的，
+        如果新人想理解 cocoder 是怎么"从一句话跑成一个 agent 流程"的，
         这里就是最关键的入口。
         """
         run_started_at = time.monotonic()
@@ -794,7 +794,7 @@ class Pico:
         attempts = 0
         max_attempts = max(self.max_steps * 3, self.max_steps + 4)
 
-        # 这是 agent 的主循环，可以按“感知 -> 决策 -> 行动 -> 记录”来理解：
+        # 这是 agent 的主循环，可以按"感知 -> 决策 -> 行动 -> 记录"来理解：
         # 1. 感知：重新组 prompt，把当前状态整理给模型看
         # 2. 决策：让模型返回一个工具调用，或一个最终答案
         # 3. 行动：如果是工具调用，就执行工具
@@ -1001,8 +1001,8 @@ class Pico:
         """执行一次工具调用，并在执行前后套上完整护栏。
 
         为什么存在：
-        在 agent 系统里，真正危险的不是“模型会不会想调用工具”，而是
-        “平台有没有在执行前把边界守住”。这个函数就是工具层的总闸口：
+        在 agent 系统里，真正危险的不是"模型会不会想调用工具"，而是
+        "平台有没有在执行前把边界守住"。这个函数就是工具层的总闸口：
         所有工具调用都必须先经过它，不能让模型直接碰到底层函数。
 
         输入 / 输出：
@@ -1011,12 +1011,12 @@ class Pico:
           这样模型下一轮都能继续消费这份反馈。
 
         在 agent 链路里的位置：
-        它位于 `ask()` 的“模型决定要调用工具”之后，是控制循环里真正把模型
+        它位于 `ask()` 的"模型决定要调用工具"之后，是控制循环里真正把模型
         意图落到外部世界的一步。因此这里串起了几乎所有安全与可控设计：
         工具是否存在、参数是否合法、是否重复、是否需要审批、执行结果是否裁剪、
         是否需要回写记忆。
         """
-        # 工具执行不是“直接调函数”，而是一条带护栏的流水线：
+        # 工具执行不是"直接调函数"，而是一条带护栏的流水线：
         # 工具是否存在 -> 参数是否合法 -> 是否重复调用 -> 是否通过审批
         # -> 真正执行 -> 更新记忆。
         tool = self.tools.get(name)
@@ -1214,7 +1214,7 @@ class Pico:
 
         为什么存在：
         模型输出首先是自然语言文本，而 runtime 需要的是结构化决策：
-        “这是工具调用”还是“这是最终答案”。如果没有这层解析，后面的工具校验、
+        "这是工具调用"还是"这是最终答案"。如果没有这层解析，后面的工具校验、
         审批和执行链路就没法可靠工作。
 
         输入 / 输出：

@@ -1,6 +1,6 @@
 """运行工件落盘。
 
-session.json 负责保存“可恢复的会话状态”；RunStore 负责保存“单次运行的审计工件”，
+session.json 负责保存"可恢复的会话状态"；RunStore 负责保存"单次运行的审计工件"，
 例如 task_state、trace 和 report。两者分开后，恢复现场和复盘证据不会混在一起。
 """
 
@@ -50,7 +50,7 @@ class RunStore:
         path = self.trace_path(task_state)
         path.parent.mkdir(parents=True, exist_ok=True)
         # trace 采用 jsonl 追加写入，原因是 agent 运行过程是流式事件序列，
-        # 逐条落盘比“最后一次性写整份 trace”更稳，也更适合调试。
+        # 逐条落盘比"最后一次性写整份 trace"更稳，也更适合调试。
         with path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(event, sort_keys=True, ensure_ascii=True))
             handle.write("\n")

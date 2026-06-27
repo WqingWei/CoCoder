@@ -231,7 +231,7 @@ class OpenAICompatibleModelClient:
         self.temperature = temperature
         self.timeout = timeout
         # 当前只在明确支持 prompt cache 语义的后端上启用这条链路，
-        # 避免对不支持的后端传一个“看起来统一、其实没意义”的伪参数。
+        # 避免对不支持的后端传一个"看起来统一、其实没意义"的伪参数。
         self.supports_prompt_cache = any(host in self.base_url for host in ("openai.com", "right.codes"))
         self.last_completion_metadata = {}
 
@@ -271,7 +271,7 @@ class OpenAICompatibleModelClient:
         }
         if self.temperature is not None:
             payload["temperature"] = self.temperature
-        # runtime 传入的是“稳定前缀”的签名，而不是整段 prompt 的签名。
+        # runtime 传入的是"稳定前缀"的签名，而不是整段 prompt 的签名。
         # 这样缓存复用针对的是稳定段，不会因为动态 history 每轮变化而失效。
         if self.supports_prompt_cache and prompt_cache_key:
             payload["prompt_cache_key"] = prompt_cache_key

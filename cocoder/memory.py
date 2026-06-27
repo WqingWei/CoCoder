@@ -337,7 +337,7 @@ def normalize_memory_state(state, workspace_root=None):
     elif not isinstance(state, dict):
         raise TypeError("memory state must be a mapping")
 
-    # 规范化层的作用，是把“磁盘里可能长得不太一样的旧状态”
+    # 规范化层的作用，是把"磁盘里可能长得不太一样的旧状态"
     # 统一整理成当前 runtime 可直接使用的紧凑结构。
     working = state.get("working")
     if not isinstance(working, dict):
@@ -504,7 +504,7 @@ def invalidate_stale_file_summaries(state, workspace_root=None):
 
 def summarize_read_result(result, limit=180):
     # 我们不会把完整文件内容塞进记忆层，
-    # 这里只保留足够提醒下一轮“刚刚读到了什么”的短摘要。
+    # 这里只保留足够提醒下一轮"刚刚读到了什么"的短摘要。
     lines = [line.strip() for line in str(result).splitlines() if line.strip()]
     if not lines:
         return "(empty)"
@@ -560,7 +560,7 @@ def retrieval_view(state, query, limit=3, workspace_root=None):
 
 def render_memory_text(state, workspace_root=None):
     state = normalize_memory_state(state, workspace_root)
-    # 这里渲染的是给模型看的紧凑“仪表盘”，不是完整回放。
+    # 这里渲染的是给模型看的紧凑"仪表盘"，不是完整回放。
     # 笔记正文默认不展开，只有在相关召回时才按需拿出来。
     lines = [
         "Memory:",

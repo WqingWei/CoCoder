@@ -1,9 +1,9 @@
-“””命令行入口。
+"""命令行入口。
 
-这个模块负责把”用户怎么启动 cocoder”翻译成 runtime 能理解的对象：
+这个模块负责把"用户怎么启动 cocoder"翻译成 runtime 能理解的对象：
 解析参数、挑模型后端、构建工作区快照、恢复或新建 session，
 最后进入 one-shot 或交互式循环。
-“””
+"""
 
 import argparse
 import os
@@ -209,7 +209,7 @@ def build_agent(args):
     为什么存在：
     命令行参数只是字符串和开关，runtime 需要的是已经装配好的对象图：
     model client、workspace snapshot、session store、secret 配置等。
-    这个函数负责把“启动参数”翻译成“agent 运行现场”。
+    这个函数负责把"启动参数"翻译成"agent 运行现场"。
 
     输入 / 输出：
     - 输入：`argparse` 解析后的 `args`

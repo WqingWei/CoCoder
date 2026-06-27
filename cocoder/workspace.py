@@ -1,6 +1,6 @@
 """工作区快照工具。
 
-这个模块负责在 agent 按需读文件之前，先给它一份便宜的“仓库第一印象”。
+这个模块负责在 agent 按需读文件之前，先给它一份便宜的"仓库第一印象"。
 这份快照刻意保持小而稳定：主要包含 Git 事实和少量白名单项目文档。
 """
 
@@ -14,7 +14,7 @@ from pathlib import Path
 MAX_TOOL_OUTPUT = 4000
 MAX_HISTORY = 12000
 # 这些文件最可能直接影响 agent 的行动方式。
-# 我们不会预加载整个仓库，只会先给模型一小份“导航包”。
+# 我们不会预加载整个仓库，只会先给模型一小份"导航包"。
 DOC_NAMES = ("AGENTS.md", "README.md", "pyproject.toml", "package.json")
 IGNORED_PATH_NAMES = {".git", ".cocoder", "__pycache__", ".pytest_cache", ".ruff_cache", ".venv", "venv"}
 

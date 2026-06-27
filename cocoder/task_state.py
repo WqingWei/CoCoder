@@ -61,7 +61,7 @@ class TaskState:
         )
 
     def record_attempt(self):
-        # attempt 统计的是“模型被调用了几轮”，不等于 tool_steps。
+        # attempt 统计的是"模型被调用了几轮"，不等于 tool_steps。
         self.attempts += 1
         return self
 
@@ -72,7 +72,7 @@ class TaskState:
         return self
 
     def stop(self, stop_reason, status=STATUS_STOPPED, final_answer=""):
-        # stop_reason 和 status 分开存，是为了区分“怎么停的”和“停下时是什么状态”。
+        # stop_reason 和 status 分开存，是为了区分"怎么停的"和"停下时是什么状态"。
         self.status = status
         self.stop_reason = stop_reason
         if final_answer != "":
