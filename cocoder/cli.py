@@ -32,10 +32,14 @@ DEFAULT_SECRET_ENV_NAMES = (
 )
 
 WELCOME_ART = (
-    "        /\\___/\\\\",
-    "       (  o o  )",
-    "       /   ^   \\\\",
-    "      /|       |\\\\",
+    "        ,_,       ",
+    "       (O,O)      ",
+    "       (   )      ",
+    "        \" \"       ",
+    "      /| | |\\\\    ",
+    "     /_|_|_|_\\\\   ",
+    "",
+    # "      cocoder",
 )
 WELCOME_NAME = "cocoder"
 WELCOME_SUBTITLE = "local coding agent"
