@@ -18,7 +18,7 @@ def build_agent(tmp_path, outputs, **kwargs):
         approval_policy=approval_policy,
         **kwargs,
     )
-
+ 
 
 def test_context_manager_assembles_sections_in_expected_order(tmp_path):
     agent = build_agent(tmp_path, [])
